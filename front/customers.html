@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
+
+</head>
+
+<body>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <!----gui--->
+    <nav class="navbar bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+            </a>
+            </a>
+            <nav class="navbar navbar-dark bg-dark fixed-top">
+                <div class="container-fluid">
+                    <img src="media/library.png" alt="Logo" width="45" height="35" href="index.html"
+                        class="d-inline-block align-text-top">
+                    <a class="navbar-brand" href="#">LibRARE</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                        aria-labelledby="offcanvasDarkNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">manu</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="Books.html">Books</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="loans.html">Loans</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="customers.html">Customers</a>
+                                </li>
+
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </nav>
+
+    <!--add customer-->
+    <!---add a book-->
+
+    <div class=libra>
+        <h1>librare's customers</h1>
+        <h2>add a customer</h2>
+        <br>
+        customer name <input id="Name_cus"><br><br>City <input id="City_cus"><br><br> Age <input id="Age_cus"><br><br>
+
+
+        <button onclick="Add_customer()">add </button><br><br>
+        <input type="text" id="searchcust" onkeyup="searchcustomers()" placeholder="Search customer..">
+
+        <button onclick="displaycustomers()">show all customers</button>
+        <hr>
+
+
+        <div class=displaAlly id="display"></div>
+
+
+        <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+        <!-- <button onclick='loadData()'>load</button> -->
+        <script>
+            const MY_SERVER = "https://librare-manage-onrender-com.onrender.com/Customers"
+
+            const displaycustomers = async () => {
+                const res = await axios.get(MY_SERVER)
+                display.innerHTML = `
+            <table class="tabledisplay" id="customersDisplay">
+                <h3>
+                <thread>
+                <tr>
+                    <th scope="col">Customer name</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Delete</th>
+                    <th scope="col">update</th>
+
+                </tr>
+                </thread>`
+                customersDisplay.innerHTML += res.data.map(cust => `
+                <tr>
+                <td>${cust.Name_customer}</td>
+                <td>${cust.City}</td>
+                <td>${cust.Age}</td>
+                <td><button onclick='delcustomer(${cust.id})'>delete</button></td>
+                <td><button onclick='cardCustomer(${cust.id})'>update</button></td>
+            </tr>
+            </h3>
+
+            </table>`).join("")
+                console.log(res.data)
+            }
+            const searchcustomers = async () => {
+                const res = await axios.get(MY_SERVER)
+                display.innerHTML = `
+            <table class="tabledisplay" id="customersDisplay">
+                <h3>
+                <thread>
+                <tr>
+                    <th scope="col">Customer name</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Delete</th>
+                    <th scope="col">update</th>
+
+                </tr>
+                </thread>`
+                customersDisplay.innerHTML += res.data.filter(cust => cust.Name_customer.toLowerCase().includes(searchcust.value.toLowerCase())).map(cust => `
+                <tr>
+                <td>${cust.Name_customer}</td>
+                <td>${cust.City}</td>
+                <td>${cust.Age}</td>
+                <td><button onclick='delcustomer(${cust.id})'>delete</button></td>
+                <td><button onclick='cardCustomer(${cust.id})'>update</button></td>
+            </tr>
+            </h3>
+
+            </table>`).join("")
+                console.log(res.data)
+            }
+
+            const cardCustomer = async (id) => {
+                console.log(id)
+                display.innerHTML = `
+                <div class="card" style="width: 18rem;">
+  
+                <div class="card-body">
+                <h5 class="card-title">update</h5>
+                ID :${id}<br><br>
+                 customer name <input id="Name_cus"><br><br>City <input id="City_cus"><br><br> Age <input id="Age_cus"><br><br>
+
+                <button onclick='uptcustomer()'>update</button>
+                </div>
+                </div>
+    
+           `.then((res) => console.log(res.data))
+            }
+
+
+            const Add_customer = async () => {
+                await axios.post(MY_SERVER + '/', {
+                    Name_cus: Name_cus.value, City_cus: City_cus.value, Age_cus: Age_cus.value
+                }).then((res) => console.log(res.data))
+            }
+
+
+            const delcustomer = async (id) => {
+                console.log(id)
+                await axios.delete(MY_SERVER + "/" + id + "/").then((res) => console.log(res.data))
+                loadData()
+            }
+
+            const uptcustomer = async (id) => {
+                console.log(id)
+                await axios.put(MY_SERVER + "/" + id + "/", {
+                    Name_cus: Name_cus.value, City_cus: City_cus.value, Age_cus:
+                        Age_cus.value
+                }).then((res) => console.log(res.data))
+                loadData()
+            }
+        </script>
+</body>
+
+</html>

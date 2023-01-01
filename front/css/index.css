@@ -1,0 +1,75 @@
+body {
+    font-style: oblique;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: azure;
+}
+
+th,
+td {
+    text-align: center;
+    padding: 8px;
+
+}
+
+tr:nth-child(even) {
+    background-color: azure
+}
+
+
+th {
+    background-color: rgb(23, 117, 117);
+
+}
+
+.libra {
+
+    font-style: oblique;
+    margin: 2cm;
+    border: 1cm;
+    background-color: darkkhaki;
+    padding-left: 3cm;
+
+
+}
+
+.displaAlly {
+    font-style: oblique;
+    margin: 1cm;
+    font-size: larger;
+
+
+
+
+}
+
+.tabledisplay {
+    border: 1cm;
+
+
+    border-color: black;
+    width: 80%;
+
+    text-align: center;
+    -o-table-baseline: inherit;
+
+
+}
+
+.welcome {
+
+    font-style: oblique;
+    text-align: center;
+    background-color: peru;
+    margin-left: 5cm;
+    margin-right: 5cm;
+    margin-top: 5cm;
+    padding: 10%;
+
+
+
+
+}
